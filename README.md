@@ -10,7 +10,7 @@ install nginx
 in nginx.conf update server section with
 
 ```
-root /home/ec2-user/afford-house-register/client/build/;
+root /home/ec2-user/affordableHousingRegister/client/build/;
 location / {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header Host $http_host;
