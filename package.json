@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "test": "jest",
     "dev": "NODE_ENV=DEVELOPMENT nodemon ./bin/www",
     "start": "node ./bin/www",
     "start:server": "node ./bin/www",
