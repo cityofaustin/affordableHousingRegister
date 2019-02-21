@@ -23,3 +23,6 @@ config_path.txt
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 server.conf
+
+# Client Folder
+/client/*
