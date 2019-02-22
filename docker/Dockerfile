@@ -19,7 +19,7 @@ ENV PORT ${PORT:-3001}
 EXPOSE $PORT
 
 # Let's copy the app into that folder
-COPY --chown=node:node "$PWD/package.json" /app
+COPY "$PWD/package.json" /app
 
 RUN npm install pm2 -g
 
