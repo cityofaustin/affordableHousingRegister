@@ -1,0 +1,35 @@
+version: '3'
+services:
+  ahdh-db:
+    image: mysql/mysql-server:8.0.13
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+     - "3306:3306"
+    volumes:
+    - ../database/:/docker-entrypoint-initdb.d/
+    environment:
+      MYSQL_USER: "ahdh"
+      MYSQL_DATABASE: "AffordableHousingDataHub"
+      MYSQL_CONTAINER_NAME: "mysql"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_PASSWORD: ""
+      MYSQL_ROOT_HOST: "%"
+
+  ahdh-register:
+    image: ahdh-register
+    ports:
+     - "3001:3001"
+    environment:
+      DEPLOYMENT_MODE: "LOCAL"
+      DATABASE_URL: "mysql://root@ahdh-db:3306/AffordableHousingDataHub"
+      NODE_ENV: "DEVELOPMENT"
+      DB_HOST: "ahdh-db"
+      DB_USER: "root"
+      DB_PASSWORD: ""
+      DB_DIALECT: "mysql"
+      DB_NAME: "AffordableHousingDataHub"
+      SESSION_SECRET: "UEWpT7p38z7Lp6UaCbeP987cpcW7VE4"
+    depends_on:
+     - "ahdh-db"

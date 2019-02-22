@@ -6,8 +6,14 @@ const bcrypt = require('bcrypt')
 const User = require('../models/User')
 users.use(cors())
 
+users.get('/register', (req, res) => {
+  console.log("Register.... test");
+  res.json({status: "This is merely a test"});
+})
+
 users.post('/register', (req, res) => {
-    const today = new Date()
+    console.log("Register....");
+    const today = new Date();
     const userData = {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
@@ -21,7 +27,7 @@ users.post('/register', (req, res) => {
         where: {
             email: req.body.email
         }
-    }) 
+    })
         .then(user=> {
             if(!user){
                 bcrypt.hash(req.body.passwd, 11, (err, hash) => {
@@ -44,6 +50,7 @@ users.post('/register', (req, res) => {
 })
 
 users.get('/profile/:id', (req, res) => {
+  console.log("Profile get id");
     User.findByPk(req.params.id)
     .then (user => {
       res.json(user);
@@ -51,6 +58,7 @@ users.get('/profile/:id', (req, res) => {
 })
 
 users.put('/profile/:id', (req, res) => {
+    console.log("Profile id put");
     const id = req.params.id
     const userData = {
         first_name: req.body.first_name,

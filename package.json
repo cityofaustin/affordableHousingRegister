@@ -14,6 +14,7 @@
     "start:prod": "concurrently \"yarn start:server\" \"yarn start:build\""
   },
   "dependencies": {
+    "ejs": "2.6.1",
     "axios": "^0.18.0",
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",

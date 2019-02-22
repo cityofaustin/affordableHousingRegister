@@ -15,31 +15,14 @@ var app = express();
 
 app.use(compression()); //Compress all routes
 app.use(helmet());
+app.set('views', '/app/views');
+
+
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 
 //Static file declaration
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-//production mode
-if(process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client/build')));
-  //
-  app.get('*', (req, res) => {
-    res.sendfile(path.join(__dirname = 'client/build/index.html'));
-  })
-}
-
-//build mode
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/client/public/index.html'));
-})
-
-/*
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, 'client/build')))
-} else {
-  app.use(express.static(path.join(__dirname, 'public')));
-}
-*/
+app.use(express.static(path.join(__dirname, '/public')));
 
 
 app.use(logger('dev'));
@@ -49,25 +32,22 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname+'/public/index.html'));
+})
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+  console.log("There is an error, catch all...");
   next(createError(404));
 });
 
 
-/*
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-  const path = require("path");
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  });
-}
-*/
-
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
+  console.log("Error handler: ");
+  console.log(err.message);
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
