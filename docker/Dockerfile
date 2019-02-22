@@ -19,15 +19,17 @@ ENV PORT ${PORT:-3001}
 EXPOSE $PORT
 
 # Let's copy the app into that folder
-COPY "$PWD/package.json" /app
+COPY --chown=node:node "$PWD/package.json" /app
 
 RUN npm install pm2 -g
+
+USER node
 
 # Let's install all dependencies
 RUN npm install -d
 
-COPY  "$PWD" /app
-COPY  "$PWD/docker/docker-entrypoint.sh" /app/docker-entrypoint.sh
+COPY --chown=node:node "$PWD" /app
+COPY --chown=node:node "$PWD/docker/docker-entrypoint.sh" /app/docker-entrypoint.sh
 
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
